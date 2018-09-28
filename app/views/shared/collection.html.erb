@@ -1,0 +1,9 @@
+
+<div id="main-container">
+  <root-table v-bind:pos="somePos">
+</div>
+
+<script language="javascript">
+  __bootstrap = <%= @collection.to_json.html_safe %>;
+  invoke_render();
+</script>

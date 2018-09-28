@@ -1,24 +1,11 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Product inventory application using Vue.
 
-Things you may want to cover:
+# Resources
 
-* Ruby version
+This site is in production at [pinvvue.herokuapp.com](http://pinvvue.herokuapp.com/).
 
-* System dependencies
+# Deploy
 
-* Configuration
+Heroku is configured to deploy this anytime the master branch is pushed to github.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
