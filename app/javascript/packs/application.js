@@ -1,26 +1,17 @@
 console.log('Hello World from Webpacker');
 
-// import vue from 'vue';
-
-import build from '../components/purchase_orders.js';
+import Vue from 'vue';
+import purchaseOrders from '../purchase_orders.vue';
 
 window.invoke_render = function() {
-
-  var tableNode = $('<table></table>');
-
-  var theadNode = $("<thead><tr><th>Title</th><th>Total</th></tr></thead>"); 
-  var tbodyNode = $('<tbody></tbody');
-
-  for(var i = 0; i< __bootstrap.length; i++) {
-    tbodyNode.append(build(__bootstrap[i]));
-  }
-
-  tableNode.append(theadNode);
-  tableNode.append(tbodyNode);
-  
-  $('.main-container').append(tableNode);
-
+  var vm = new Vue({
+    el: '#main-container',
+    components: {
+      'root-table': purchaseOrders
+    },
+    data: {
+      message: "Hey mike",
+      somePos: __bootstrap
+    }
+  })
 };
-
-
-
