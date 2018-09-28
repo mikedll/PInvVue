@@ -1,6 +1,7 @@
 class PurchaseOrdersController < ApplicationController
   def index
-    pos = PurchaseOrder.search(params)[:results]
-    render :inline => "POs: " + pos.map { |po| po['id'] }.join(',')
+    pos = PurchaseOrder.with_customer.search(params)[:results]
+    @collection = pos
+    render :template => 'shared/collection'
   end
 end
