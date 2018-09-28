@@ -13,7 +13,12 @@
 </template>
 
 <script>
+  import poRow from 'po_row.vue';
+  
 export default {
-    props: ['pos']
+    props: ['pos'],
+    components: {
+        poRow
+        }
 }
 </script>

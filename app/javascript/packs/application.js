@@ -1,16 +1,14 @@
-console.log('Hello World from Webpacker');
+import Vue from 'vue/dist/vue.esm.js';
+import rootTable from '../purchase_orders.vue';
 
-import Vue from 'vue';
-import purchaseOrders from '../purchase_orders.vue';
 
 window.invoke_render = function() {
   var vm = new Vue({
     el: '#main-container',
     components: {
-      'root-table': purchaseOrders
+      rootTable
     },
     data: {
-      message: "Hey mike",
       somePos: __bootstrap
     }
   })
