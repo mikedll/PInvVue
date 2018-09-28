@@ -8,7 +8,7 @@ window.invoke_render = function() {
       rootTable
     },
     data: {
-      somePos: __bootstrap
+      query_result: __bootstrap
     }
   })
 };
