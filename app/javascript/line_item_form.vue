@@ -42,15 +42,16 @@ export default {
       }
     })
 
-    // this.$el.find("input[name=added_at]").datepicker({
-    //   onSelect: (dateText) => {
-    //     this.setState({added_at: dateText});
-    //   },
-    //   dateFormat: 'yy-mm-dd'
-    // });
+    $(this.$el).find("input[name=added_at]").datepicker({
+      onSelect: (dateText) => {
+        this.added_at = dateText
+      },
+      dateFormat: 'yy-mm-dd'
+    });
   },  
   beforeDestroy: function() {
     $(this.$el).find('input[name=item_search]').autocomplete('destroy');
+    $(this.$el).find('input[name=added_at]').datepicker('destroy');
   },  
   computed: {
     valid: function() {
