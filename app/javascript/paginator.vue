@@ -1,9 +1,9 @@
 <template>
-  <div className="container">
+  <div class="container">
     <nav>
-      <ul className="pagination">
-        <li v-for="la in linkAttrs" :key="'page-' + la[0]" v-if="la">
-          <a :href="la[4] ? '#' : la[2]">{{ la[1] }}</a>
+      <ul class="pagination">
+        <li class="page-item" :class="{active: la[3], disabled: la[4] }" v-for="la in linkAttrs" :key="'page-' + la[0]" v-if="la">
+          <a class="page-link" :href="la[4] ? '#' : la[2]">{{ la[1] }}</a>
         </li>
       </ul>
     </nav>
