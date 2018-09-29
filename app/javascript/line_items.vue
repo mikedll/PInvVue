@@ -1,4 +1,9 @@
 <template>
+  <div className="line_items">
+    <div><strong> Line Items </strong></div>
+
+    <line-item-form></line-item-form>
+    
     <table>
       <thead>
         <tr>
@@ -16,17 +21,20 @@
           <td></td>
         </tr>
       </tbody>
-    </table>
+    </table>    
+  </div>
 </template>
 
 <script>
-import lineItemRow from 'line_item_row.vue'
 import update from 'immutability-helper'
+import _ from 'underscore'
+import lineItemForm from 'line_item_form.vue'
+import lineItemRow from 'line_item_row.vue'
 
 export default {
-  props: ['total', 'line_items'],
+  props: ['total', 'line_items', 'purchase_order_id'],
   components: {
-    lineItemRow
+    lineItemForm, lineItemRow
   },
   data: function() {
     return {
@@ -35,6 +43,22 @@ export default {
     }
   },
   methods: {
+    handleSubmit: function() {
+      $.ajax({
+        method: 'POST',
+        url: '/purchase_orders/' + this.purchase_order.id + '/line_items',
+        dataType: 'JSON',
+        data: {
+          quantity: 1,
+          added_at: null,
+          item_id: null
+        },
+        success: (data) => {
+          this.m_line_items = update(this.m_line_items, {$push: [_.omit(data, 'purchase_order')]})
+          this.m_total = data.purchase_order.total
+        }
+      })
+    },
     handleLineItemDelete: function(params) {
       var index = this.m_line_items.indexOf(params.line_item)
       this.m_line_items = update(this.m_line_items, { $splice: [[index, 1]] } )

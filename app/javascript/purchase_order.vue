@@ -4,7 +4,7 @@
     
     {{ record.title }}
 
-    <line-items :line_items="record.line_items" :total="record.total"></line-items>
+    <line-items :purchase_order_id="record.id" :line_items="record.line_items" :total="record.total"></line-items>
   </div>  
 </template>
 
