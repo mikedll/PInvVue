@@ -33,7 +33,11 @@ export default {
   props: ['total', 'line_items'],
   methods: {
     clicked: function() {
-      console.log("Clicked delete")
+
+      $.ajax({
+        path: '/purchase_orders/' + 
+        method: 'DELETE'
+      })
     }
   }
 }

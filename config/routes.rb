@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :purchase_orders, :only => [:index, :show]
+  resources :purchase_orders, :only => [:index, :show] do
+    resources :line_items, :only => [:destroy]
+  end
 
   root 'purchase_orders#index'
 
