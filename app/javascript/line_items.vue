@@ -2,7 +2,7 @@
   <div className="line_items">
     <div><strong> Line Items </strong></div>
 
-    <line-item-form></line-item-form>
+    <line-item-form v-on:li-added="handleNewLineItem"></line-item-form>
     
     <table>
       <thead>
@@ -43,21 +43,9 @@ export default {
     }
   },
   methods: {
-    handleSubmit: function() {
-      $.ajax({
-        method: 'POST',
-        url: '/purchase_orders/' + this.purchase_order.id + '/line_items',
-        dataType: 'JSON',
-        data: {
-          quantity: 1,
-          added_at: null,
-          item_id: null
-        },
-        success: (data) => {
-          this.m_line_items = update(this.m_line_items, {$push: [_.omit(data, 'purchase_order')]})
-          this.m_total = data.purchase_order.total
-        }
-      })
+    handleNewLineItem: function(params) {
+      this.m_line_items = update(this.m_line_items, {$push: [_.omit(params, 'purchase_order')]})
+      this.m_total = params.purchase_order.total
     },
     handleLineItemDelete: function(params) {
       var index = this.m_line_items.indexOf(params.line_item)
