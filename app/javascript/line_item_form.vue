@@ -23,8 +23,8 @@ export default {
   props: ['purchase_order_id'],
   data: function() {
     return {
-      added_at: '2018-09-27',
-      quantity: '2',
+      added_at: '',
+      quantity: '',
       item: null,
       item_id: ''
     }
