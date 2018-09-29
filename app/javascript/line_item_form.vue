@@ -1,18 +1,18 @@
 <template>
-  <form className="form-inline" v-on:submit.prevent="handleSubmit">
-    <div className="form-group mb-2 mr-sm-2">
-      <input type="text" className="form-control" placeholder="Date" v-model="added_at" name="added_at"/>
+  <form class="form-inline" v-on:submit.prevent="handleSubmit">
+    <div class="form-group mb-2 mr-sm-2">
+      <input type="text" class="form-control" placeholder="Date" v-model="added_at" name="added_at"/>
     </div>
-    <div className="form-group mb-2 mr-sm-2">
-      <input type="text" className="form-control" placeholder="Item"  v-model="item_search"name="item_search"/>
+    <div class="form-group mb-2 mr-sm-2">
+      <input type="text" class="form-control" placeholder="Item" name="item_search"/>
     </div>
-    <div className="form-group mb-2 mr-sm-2">
-      <input type="text" className="form-control" placeholder="Quantity" v-model="quantity"/>
+    <div class="form-group mb-2 mr-sm-2">
+      <input type="text" class="form-control" placeholder="Quantity" v-model="quantity"/>
     </div>
-    <div className="form-group mb-2 mr-sm-2">
+    <div class="form-group mb-2 mr-sm-2">
       <strong>{{ price }}</strong>
     </div>
-    <button type="submit" className="btn btn-primary mb-2" disabled={!this.valid}>Create line item</button>
+    <button type="submit" class="btn btn-primary mb-2" :disabled="!valid">Create line item</button>
   </form>
 </template>
 
@@ -20,9 +20,9 @@
 import { AppRoutes } from 'support/appRoutes.js'
   
 export default {
+  props: ['purchase_order_id'],
   data: function() {
     return {
-      item_search: '',
       added_at: '2018-09-27',
       quantity: '2',
       item: null,
@@ -55,39 +55,34 @@ export default {
   },  
   computed: {
     valid: function() {
-      return (this.item_id && this.added_at && this.m_quantity && !isNaN(parseFloat(this.quantity)))
+      return (this.item_id && this.added_at && this.quantity && !isNaN(parseFloat(this.quantity)))
     },
     price: function() {
-      const qtyF = parseFloat(this.m_quantity)
+      const qtyF = parseFloat(this.quantity)
       if (isNaN(qtyF) || this.item === null) return null
       return (qtyF * this.item.unit_price)
-    }
-  },
-  watch: {
-    item_search: function(newItemSearch, oldItemSearch) {
-      if(newItemSearch.length > 2) {
-      }
-      // send out ajax search here...
     }
   },
   methods: {
     handleSubmit: function() {
       $.ajax({
         method: 'POST',
-        url: '/purchase_orders/' + this.purchase_order.id + '/line_items',
+        url: AppRoutes.lineItems(this.purchase_order_id),
         dataType: 'JSON',
         data: {
-          quantity: this.quantity,
-          added_at: this.added_at,
-          item_id: this.item_id
+          line_item: {
+            quantity: this.quantity,
+            added_at: this.added_at,
+            item_id: this.item_id
+          }
         },
         success: (data) => {
-          this.item_search = ''
+          $(this.$el).find('input[name=item_search]').val('')
           this.added_at = ''
           this.quantity = ''
           this.item = null
           this.item_id = ''
-          this.$emit('li-added', {line_item: data})
+          this.$emit('li-added', data)
         }
       })
       

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { AppRoutes } from 'support/appRoutes.js'
   
 export default {
   props: ['line_item'],
@@ -20,7 +21,7 @@ export default {
   methods: {
     handleDelete: function() {
       $.ajax({
-        url: '/purchase_orders/' + this.line_item.purchase_order_id + '/line_items/' + this.line_item.id,
+        url: AppRoutes.lineItem(this.line_item.purchase_order_id, this.line_item.id),
         method: 'DELETE',
         dataType: 'JSON',
         success: (data) => {

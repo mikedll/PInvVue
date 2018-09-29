@@ -2,7 +2,7 @@
   <div className="line_items">
     <div><strong> Line Items </strong></div>
 
-    <line-item-form v-on:li-added="handleNewLineItem"></line-item-form>
+    <line-item-form :purchase_order_id="purchase_order_id" v-on:li-added="handleNewLineItem"></line-item-form>
     
     <table>
       <thead>
@@ -43,9 +43,9 @@ export default {
     }
   },
   methods: {
-    handleNewLineItem: function(params) {
-      this.m_line_items = update(this.m_line_items, {$push: [_.omit(params, 'purchase_order')]})
-      this.m_total = params.purchase_order.total
+    handleNewLineItem: function(line_item) {
+      this.m_line_items = update(this.m_line_items, {$push: [_.omit(line_item, 'purchase_order')]})
+      this.m_total = line_item.purchase_order.total
     },
     handleLineItemDelete: function(params) {
       var index = this.m_line_items.indexOf(params.line_item)
