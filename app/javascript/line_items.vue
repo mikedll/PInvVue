@@ -9,18 +9,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="li in line_items">
-          <td>{{ li.item.name }}</td>
-          <td></td>
-          <td>{{ li.price }} </td>
-          <td>
-            Edit
-            <button v-on:click="clicked">Delete</button>
-          </td>
-        </tr>
+        <line-item-row v-on:li-deleted="handleLineItemDelete" v-for="li in m_line_items" :line_item="li" :key="li.id"></line-item-row>
         <tr>
           <td colspan="2">Total:</td>
-          <td><strong>{{ total }}</strong></td>
+          <td><strong>{{ m_total }}</strong></td>
           <td></td>
         </tr>
       </tbody>
@@ -28,16 +20,26 @@
 </template>
 
 <script>
+import lineItemRow from 'line_item_row.vue'
+import update from 'immutability-helper'
 
 export default {
   props: ['total', 'line_items'],
+  components: {
+    lineItemRow
+  },
+  data: function() {
+    return {
+      m_total: this.total,
+      m_line_items: this.line_items
+    }
+  },
   methods: {
-    clicked: function() {
-
-      $.ajax({
-        path: '/purchase_orders/' + 
-        method: 'DELETE'
-      })
+    handleLineItemDelete: function(params) {
+      var index = this.m_line_items.indexOf(params.line_item)
+      this.m_line_items = update(this.m_line_items, { $splice: [[index, 1]] } )
+      this.m_total = params.purchase_order.total
+      return
     }
   }
 }

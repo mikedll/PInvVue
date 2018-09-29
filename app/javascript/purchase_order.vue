@@ -9,12 +9,12 @@
 </template>
 
 <script>
-  import lineItems from 'line_items.vue'
-  
-  export default {
+import lineItems from 'line_items.vue'
+
+export default {
   components: {
-  lineItems
+    lineItems
   },
   props: ['record']
-  }
+}
 </script>
