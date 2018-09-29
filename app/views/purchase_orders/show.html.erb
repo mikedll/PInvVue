@@ -1,0 +1,8 @@
+<div id="main-container">
+  <purchase-order v-bind:record="bootstrap">
+</div>
+
+<script language="javascript">
+  __bootstrap = <%= @record.to_json.html_safe %>;
+  invoke_render();
+</script>
