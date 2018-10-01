@@ -2,9 +2,9 @@
 <tr>
   <template v-if="!editMode">
     <td>{{ fAddedAt }}</td>
-    <td>{{ item.name }}</td>
+    <td>{{ line_item.item.name }}</td>
     <td>{{ fUnitPrice }}</td>
-    <td>{{ quantity }}</td>
+    <td>{{ line_item.quantity }}</td>
     <td>{{ fPrice }} </td>
     <td>
       <button v-on:click="handleEdit">Edit</button>      
@@ -14,7 +14,7 @@
   <template v-else>
     <td><input type="text" name="added_at" v-model="added_at"/></td>
     <td><input type="text" name="item_search" :value="item.name"/></td>
-    <td>{{ item.unit_price }}</td>
+    <td>{{ fNewUnitPrice }}</td>
     <td><input type="text" v-model="quantity"/></td>
     <td>{{ newPrice }}</td>
     <td>
@@ -49,8 +49,9 @@ export default {
       const li = new LineItem(this.item, this.quantity)
       return li.price()
     },
-    fAddedAt: function() { return moment(this.added_at).format(MomentFormats.Time) },
-    fUnitPrice: function() { return amountFormat(this.item.unit_price) },
+    fNewUnitPrice: function() { return amountFormat(this.item.unit_price) },
+    fAddedAt: function() { return moment(this.line_item.added_at).format(MomentFormats.Time) },
+    fUnitPrice: function() { return amountFormat(this.line_item.item.unit_price) },
     fPrice: function() { return amountFormat(this.line_item.price) }    
   },
   methods: {
