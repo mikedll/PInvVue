@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <line-item-row v-on:li-deleted="handleLineItemDelete" v-for="li in m_line_items" :line_item="li" :key="li.id"></line-item-row>
+      <line-item-row v-on:li-updated="handleLineItemUpdate" v-on:li-deleted="handleLineItemDelete" v-for="li in m_line_items" :line_item="li" :key="li.id"></line-item-row>
       <tr>
         <td colspan="4">Total:</td>
         <td><strong>{{ m_total }}</strong></td>
@@ -48,6 +48,11 @@ export default {
     handleNewLineItem: function(line_item) {
       this.m_line_items = update(this.m_line_items, {$push: [_.omit(line_item, 'purchase_order')]})
       this.m_total = line_item.purchase_order.total
+    },
+    handleLineItemUpdate: function(params) {
+      const index = this.line_items.indexOf(params.line_item)
+      this.m_line_items = update(this.line_items, {$splice: [[index, 1, _.omit(params.data, 'purchase_order')]]})
+      this.m_total = params.data.purchase_order.total      
     },
     handleLineItemDelete: function(params) {
       var index = this.m_line_items.indexOf(params.line_item)
