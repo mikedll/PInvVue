@@ -1,28 +1,30 @@
 <template>
-  <div className="line_items">
-    <div><strong> Line Items </strong></div>
-
-    <line-item-form :purchase_order_id="purchase_order_id" v-on:li-added="handleNewLineItem"></line-item-form>
-    
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Qty</th>        
-          <th>Price</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <line-item-row v-on:li-deleted="handleLineItemDelete" v-for="li in m_line_items" :line_item="li" :key="li.id"></line-item-row>
-        <tr>
-          <td colspan="2">Total:</td>
-          <td><strong>{{ m_total }}</strong></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>    
-  </div>
+<div class="line-items">
+  <div><strong> Line Items </strong></div>
+  
+  <line-item-form :purchase_order_id="purchase_order_id" v-on:li-added="handleNewLineItem"></line-item-form>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Date Added</th>
+        <th>Name</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Actions</th>              
+      </tr>
+    </thead>
+    <tbody>
+      <line-item-row v-on:li-deleted="handleLineItemDelete" v-for="li in m_line_items" :line_item="li" :key="li.id"></line-item-row>
+      <tr>
+        <td colspan="4">Total:</td>
+        <td><strong>{{ m_total }}</strong></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>    
+</div>
 </template>
 
 <script>
